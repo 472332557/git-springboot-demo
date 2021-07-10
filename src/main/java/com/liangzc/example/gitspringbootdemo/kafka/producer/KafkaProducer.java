@@ -14,6 +14,7 @@ public class KafkaProducer {
     public String send(@RequestParam String msg){
         System.out.println("kafka准备发送消息中。。。。。。");
         kafkaTemplate.send("lzc-topic-test", msg);
+        System.out.println("kafka发送消息结束。。。。。。");
         return "ok";
     }
 }
