@@ -18,4 +18,9 @@ public class RabbitMQTest {
     public void contextLoads() {
         produceTest.send();
     }
+
+    @Test
+    public void sendDirect(){
+        produceTest.sendDirect();
+    }
 }

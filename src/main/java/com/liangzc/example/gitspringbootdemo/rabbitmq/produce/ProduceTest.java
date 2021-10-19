@@ -16,4 +16,12 @@ public class ProduceTest {
 
         amqpTemplate.convertAndSend("spring-boot-exchange", "", "一条从spring boot 发来的消息");
     }
+
+
+    public void sendDirect(){
+
+        System.out.println("准备发送消息。。。。。。。。。。。。。。");
+
+        amqpTemplate.convertAndSend("spring-boot-direct-exchange", "direct", "一条从spring boot 发来的直连消息！！！");
+    }
 }
