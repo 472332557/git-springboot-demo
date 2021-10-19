@@ -23,4 +23,9 @@ public class RabbitMQTest {
     public void sendDirect(){
         produceTest.sendDirect();
     }
+
+    @Test
+    public void sendDelay(){
+        produceTest.sendDelayMsg();
+    }
 }
