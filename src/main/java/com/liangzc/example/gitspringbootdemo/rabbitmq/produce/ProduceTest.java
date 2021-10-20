@@ -41,8 +41,8 @@ public class ProduceTest {
         MessageProperties properties = new MessageProperties();
         properties.setHeader("x-delay",delayTime.getTime() - now.getTime());
         SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
-        String msg = "发送时间：" + sf.format(now) + "，投递时间：" + sf.format(delayTime);
+        String msg = "发送时间：" + sf.format(now) + "，预计投递时间：" + sf.format(delayTime);
         Message message = new Message(msg.getBytes(), properties);
-        amqpTemplate.convertAndSend("spring-boot-delay-exchange", "direct", message);
+        amqpTemplate.convertAndSend("spring-boot-delay-exchange", "delay", message);
     }
 }
