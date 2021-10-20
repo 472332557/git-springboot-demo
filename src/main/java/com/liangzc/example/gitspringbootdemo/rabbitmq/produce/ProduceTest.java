@@ -16,6 +16,9 @@ public class ProduceTest {
     @Autowired
     AmqpTemplate amqpTemplate;
 
+    /**
+     * 广播交换机（FanoutExchange）实现消息的广播发送
+     */
     public void send(){
 
         System.out.println("准备发送消息。。。。。。。。。。。。。。");
@@ -24,6 +27,9 @@ public class ProduceTest {
     }
 
 
+    /**
+     * 直连交换（DirectExchange）机实现消息的发送
+     */
     public void sendDirect(){
 
         System.out.println("准备发送消息。。。。。。。。。。。。。。");
@@ -31,6 +37,9 @@ public class ProduceTest {
         amqpTemplate.convertAndSend("spring-boot-direct-exchange", "direct", "一条从spring boot 发来的直连消息！！！");
     }
 
+    /**
+     * 使用延迟发送消息插件实现消息的延迟投递，生产者
+     */
     public void sendDelayMsg(){
         System.out.println("准备发送消息。。。。。。。。。。。。。。");
         // 延时投递，比如延时1分钟

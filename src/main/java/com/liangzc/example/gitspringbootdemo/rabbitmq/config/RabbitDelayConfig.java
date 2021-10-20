@@ -38,7 +38,6 @@ public class RabbitDelayConfig {
     }
 
     /**
-     * 绑定，#全匹配
      * @param exchange
      * @param queue
      * @return
