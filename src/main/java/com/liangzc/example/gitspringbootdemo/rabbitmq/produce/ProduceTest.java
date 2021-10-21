@@ -3,6 +3,7 @@ package com.liangzc.example.gitspringbootdemo.rabbitmq.produce;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessageProperties;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -13,8 +14,11 @@ import java.util.Date;
 @Component
 public class ProduceTest {
 
+//    @Autowired
+//    AmqpTemplate amqpTemplate;
+
     @Autowired
-    AmqpTemplate amqpTemplate;
+    private RabbitTemplate rabbitTemplate;
 
     /**
      * 广播交换机（FanoutExchange）实现消息的广播发送
@@ -23,7 +27,7 @@ public class ProduceTest {
 
         System.out.println("准备发送消息。。。。。。。。。。。。。。");
 
-        amqpTemplate.convertAndSend("spring-boot-exchange", "", "一条从spring boot 发来的消息");
+        rabbitTemplate.convertAndSend("spring-boot-exchange", "", "一条从spring boot 发来的消息");
     }
 
 
@@ -34,7 +38,7 @@ public class ProduceTest {
 
         System.out.println("准备发送消息。。。。。。。。。。。。。。");
 
-        amqpTemplate.convertAndSend("spring-boot-direct-exchange", "direct", "一条从spring boot 发来的直连消息！！！");
+        rabbitTemplate.convertAndSend("spring-boot-direct-exchange", "direct", "一条从spring boot 发来的直连消息！！！");
     }
 
     /**
@@ -52,6 +56,6 @@ public class ProduceTest {
         SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
         String msg = "发送时间：" + sf.format(now) + "，预计投递时间：" + sf.format(delayTime);
         Message message = new Message(msg.getBytes(), properties);
-        amqpTemplate.convertAndSend("spring-boot-delay-exchange", "delay", message);
+        rabbitTemplate.convertAndSend("spring-boot-delay-exchange", "delay", message);
     }
 }

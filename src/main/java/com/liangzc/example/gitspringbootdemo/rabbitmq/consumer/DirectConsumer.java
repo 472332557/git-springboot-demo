@@ -1,5 +1,6 @@
 package com.liangzc.example.gitspringbootdemo.rabbitmq.consumer;
 
+import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
@@ -10,7 +11,7 @@ public class DirectConsumer {
 
 
     @RabbitHandler
-    public void process(String message){
+    public void process(Message message){
 
         System.out.println("接收到一条消息--------->>>:"+message);
     }
