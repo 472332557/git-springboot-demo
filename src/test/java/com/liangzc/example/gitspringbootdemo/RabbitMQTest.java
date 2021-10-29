@@ -1,5 +1,5 @@
 package com.liangzc.example.gitspringbootdemo;
-import com.liangzc.example.gitspringbootdemo.rabbitmq.produce.ProduceTest;
+import com.liangzc.example.rabbitmq.produce.ProduceTest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
