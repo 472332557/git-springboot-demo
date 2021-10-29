@@ -1,4 +1,4 @@
-package com.liangzc.example.gitspringbootdemo;
+package com.liangzc.example;
 
 import com.liangzc.example.kafka.producer.KafkaProducer;
 import org.junit.Test;

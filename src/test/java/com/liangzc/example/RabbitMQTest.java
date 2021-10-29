@@ -1,4 +1,4 @@
-package com.liangzc.example.gitspringbootdemo;
+package com.liangzc.example;
 import com.liangzc.example.rabbitmq.produce.ProduceTest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
