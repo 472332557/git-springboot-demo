@@ -1,9 +1,10 @@
 package com.liangzc.example.start.filter;
 
 import javax.servlet.*;
+import javax.servlet.annotation.WebFilter;
 import java.io.IOException;
 
-//@WebFilter(urlPatterns = "/*",filterName = "filterTest")
+@WebFilter(urlPatterns = "/filter/*",filterName = "filterTest")
 public class FilterTest implements Filter {
 
     @Override

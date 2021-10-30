@@ -11,7 +11,7 @@ import java.io.IOException;
  * 引入servlet
  */
 
-@WebServlet("/*")
+@WebServlet(urlPatterns = "/start/*")
 public class ServletTest extends HttpServlet {
 
     @Override
