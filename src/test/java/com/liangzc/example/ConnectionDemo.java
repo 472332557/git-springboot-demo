@@ -18,7 +18,7 @@ import java.util.StringJoiner;
 public class ConnectionDemo {
 
 
-    //get
+    //HttpURLConnection get
     @Test
     public void httpConnectionUrlTest() throws IOException {
         StringBuffer result = new StringBuffer();
@@ -39,7 +39,7 @@ public class ConnectionDemo {
         System.out.println(result.toString());
     }
 
-    //post
+    //HttpURLConnection post
     @Test
     public void httpConnectionUrlPostTest() throws IOException {
         StringBuffer result = new StringBuffer();
