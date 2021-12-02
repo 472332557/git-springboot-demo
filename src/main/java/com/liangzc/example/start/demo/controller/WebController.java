@@ -1,10 +1,8 @@
 package com.liangzc.example.start.demo.controller;
 
+import com.liangzc.example.start.demo.model.User;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class WebController {
@@ -28,4 +26,9 @@ public class WebController {
         return "post"+ id;
     }
 
+    @PostMapping("/postJsonTest")
+    @ResponseBody
+    public String postDemo(@RequestBody User user){
+        return "post"+ user;
+    }
 }
