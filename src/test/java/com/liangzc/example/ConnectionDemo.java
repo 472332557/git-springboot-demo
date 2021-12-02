@@ -3,15 +3,21 @@ package com.liangzc.example;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.RestTemplate;
 
 import java.io.*;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.StringJoiner;
+
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -75,6 +81,35 @@ public class ConnectionDemo {
         }
         bufferedReader.close();
         System.out.println("响应报文："+result.toString());
+    }
+
+    //RestTemplate get
+    @Test
+    public void RestTemplateGet(){
+        RestTemplate restTemplate = new RestTemplate();
+        String url = "http://localhost:8081/start?id="+1;
+        String result = restTemplate.getForObject(url, String.class);
+        System.out.println("返回结果："+result);
+    }
+
+    //RestTemplate post
+    @Test
+    public void RestTemplatePost(){
+        RestTemplate restTemplate = new RestTemplate();
+        String url = "http://localhost:8081/postTest";
+
+        //设置请求头信息
+        MediaType type = MediaType.parseMediaType("application/x-www-form-urlencoded; charset=UTF-8");
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(type);
+        //设置请求参数
+        MultiValueMap<String,Object> multiValueMap = new LinkedMultiValueMap();
+        multiValueMap.add("id","666");
+        HttpEntity<MultiValueMap<String, Object>> entity = new HttpEntity<>(multiValueMap, httpHeaders);
+
+        ResponseEntity<String> responseEntity = restTemplate.postForEntity(url, entity, String.class);
+        String body = responseEntity.getBody();
+        System.out.println("返回信息："+body);
     }
 
 }
