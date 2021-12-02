@@ -2,6 +2,10 @@ package com.liangzc.example;
 
 import com.alibaba.fastjson.JSONObject;
 import com.liangzc.example.start.demo.model.User;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+import okhttp3.ResponseBody;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
@@ -262,6 +266,31 @@ public class ConnectionDemo {
         }
     }
 
+    // okHttp  get
+    @Test
+    public void okHttpGet(){
+        OkHttpClient okHttpClient = new OkHttpClient();
+        Request request = new Request.Builder().url(getUrl).build();
+        Response response = null;
+        try {
+            response = okHttpClient.newCall(request).execute();
+            if(response.isSuccessful()){
 
+                ResponseBody responseBody = response.body();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(responseBody.byteStream()));
+                String line;
+                StringBuilder builder = new StringBuilder();
+                while ((line = bufferedReader.readLine()) != null){
+                    builder.append(line);
+                }
+                System.out.println("返回信息为："+builder.toString());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally {
+
+        }
+
+    }
 
 }
