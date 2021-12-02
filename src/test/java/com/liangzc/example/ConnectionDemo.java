@@ -2,10 +2,7 @@ package com.liangzc.example;
 
 import com.alibaba.fastjson.JSONObject;
 import com.liangzc.example.start.demo.model.User;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-import okhttp3.ResponseBody;
+import okhttp3.*;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
@@ -271,6 +268,40 @@ public class ConnectionDemo {
     public void okHttpGet(){
         OkHttpClient okHttpClient = new OkHttpClient();
         Request request = new Request.Builder().url(getUrl).build();
+        Response response = null;
+        try {
+            response = okHttpClient.newCall(request).execute();
+            if(response.isSuccessful()){
+
+                ResponseBody responseBody = response.body();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(responseBody.byteStream()));
+                String line;
+                StringBuilder builder = new StringBuilder();
+                while ((line = bufferedReader.readLine()) != null){
+                    builder.append(line);
+                }
+                System.out.println("返回信息为："+builder.toString());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally {
+
+        }
+
+    }
+
+    // okHttp  post
+    @Test
+    public void okHttpPost(){
+        OkHttpClient okHttpClient = new OkHttpClient();
+        //构建请求参数
+        User user = new User();
+        user.setName("lili");
+        user.setAge("20");
+        user.setGender("女");
+        okhttp3.MediaType mediaType = okhttp3.MediaType.parse("application/json;charset=utf-8");
+        RequestBody body = RequestBody.create(JSONObject.toJSONString(user), mediaType);
+        Request request = new Request.Builder().url(postUrlJson).post(body).build();
         Response response = null;
         try {
             response = okHttpClient.newCall(request).execute();
