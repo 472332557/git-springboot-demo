@@ -3,12 +3,16 @@ package com.liangzc.example;
 import com.alibaba.fastjson.JSONObject;
 import com.liangzc.example.start.demo.model.User;
 import okhttp3.*;
+import org.apache.http.HttpStatus;
+import org.apache.http.StatusLine;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -32,7 +36,7 @@ import java.util.Map;
 @SpringBootTest
 public class ConnectionDemo {
 
-    public static final String getUrl = "http://localhost:8081/start?id="+1;
+    public static final String getUrl = "http://localhost:8081/start?id="+666;
 
     public static final String postUrl = "http://localhost:8081/postTest";
 
@@ -262,6 +266,54 @@ public class ConnectionDemo {
             }
         }
     }
+
+    /**
+     * HttpClient一般使用按下面的方式来，有EntityUtils工具类来解析请求返回的信息
+     * 不需要在上面的方法中，拿到输入流然后再去自己处理了，查看了源码，源码也是如此处理
+     */
+    @Test
+    public void httpClientPostOfJsonNew(){
+        CloseableHttpClient httpClient = HttpClients.createDefault();
+        HttpPost httpPost = new HttpPost(postUrlJson);
+        httpPost.setHeader("Content-Type","application/json;charset=utf8");
+        //构建请求参数
+        User user = new User();
+        user.setName("lili");
+        user.setAge("20");
+        user.setGender("女");
+        StringEntity stringEntity = new StringEntity(JSONObject.toJSONString(user), "UTF-8");
+        //设置请求参数，放入请求体
+        httpPost.setEntity(stringEntity);
+        CloseableHttpResponse response = null;
+        try {
+            response = httpClient.execute(httpPost);
+            StatusLine statusLine = response.getStatusLine();
+            int statusCode = statusLine.getStatusCode();
+            System.out.println("请求返回状态码："+statusCode);
+            org.apache.http.HttpEntity responseEntity = response.getEntity();
+            String toString = EntityUtils.toString(responseEntity);
+            if(statusCode == HttpStatus.SC_OK){
+                System.out.println("请求返回："+toString);
+            }else {
+                System.out.println("请求返回："+toString);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally {
+            //释放资源
+            try {
+                if(httpClient != null){
+                    httpClient.close();
+                }
+                if (response != null){
+                    response.close();
+                }
+            }catch (IOException e){
+                e.printStackTrace();
+            }
+        }
+    }
+
 
     // okHttp  get
     @Test
