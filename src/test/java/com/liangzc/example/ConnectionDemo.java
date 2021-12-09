@@ -3,8 +3,11 @@ package com.liangzc.example;
 import com.alibaba.fastjson.JSONObject;
 import com.liangzc.example.start.demo.model.User;
 import okhttp3.*;
+import org.apache.commons.compress.utils.Lists;
 import org.apache.http.HttpStatus;
+import org.apache.http.NameValuePair;
 import org.apache.http.StatusLine;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
@@ -12,6 +15,7 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
+import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -29,6 +33,7 @@ import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -109,7 +114,7 @@ public class ConnectionDemo {
         System.out.println("返回结果："+result);
     }
 
-    //RestTemplate post
+    //RestTemplate post  key-value
     @Test
     public void RestTemplatePost(){
         RestTemplate restTemplate = new RestTemplate();
@@ -125,6 +130,24 @@ public class ConnectionDemo {
         HttpEntity<MultiValueMap<String, Object>> entity = new HttpEntity<>(multiValueMap, httpHeaders);
 
         ResponseEntity<String> responseEntity = restTemplate.postForEntity(postUrl, entity, String.class);
+        String body = responseEntity.getBody();
+        System.out.println("返回信息："+body);
+    }
+
+    //RestTemplate postJson
+    @Test
+    public void RestTemplatePostJson(){
+        RestTemplate restTemplate = new RestTemplate();
+        //设置请求头信息
+        MediaType type = MediaType.parseMediaType("application/json; charset=UTF-8");
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(type);
+        //构建请求参数
+        User user = new User();
+        user.setName("lili");
+        user.setAge("20");
+        user.setGender("女");
+        ResponseEntity<String> responseEntity = restTemplate.postForEntity(postUrlJson, user, String.class);
         String body = responseEntity.getBody();
         System.out.println("返回信息："+body);
     }
@@ -179,12 +202,14 @@ public class ConnectionDemo {
         //创建get请求
         HttpPost httpPost = new HttpPost(postUrl);
         httpPost.setHeader("Content-Type","application/x-www-form-urlencoded");
-        //构建请求参数
-        StringEntity stringEntity = new StringEntity("id=" +666, "UTF-8");
-        //设置请求参数，放入请求体
-        httpPost.setEntity(stringEntity);
+
         CloseableHttpResponse response = null;
         try {
+            //构建请求参数
+            List<NameValuePair> paramList = Lists.newArrayList();
+            paramList.add(new BasicNameValuePair("id", "666"));
+            //设置请求参数，放入请求体
+            httpPost.setEntity(new UrlEncodedFormEntity(paramList,"UTF-8"));
             //发送post请求
             response = httpClient.execute(httpPost);
             System.out.println("响应状态为："+response.getStatusLine());
