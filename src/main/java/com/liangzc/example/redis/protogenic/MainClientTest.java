@@ -5,7 +5,7 @@ public class MainClientTest {
     public static void main(String[] args) {
 
 
-        CustomerRedisClient redisClient = new CustomerRedisClient("119.23.189.136",6379);
+        CustomerRedisClient redisClient = new CustomerRedisClient("106.55.227.209",6379);
 
         System.out.println(redisClient.set("firstKey", "firstValue"));
 
