@@ -2,6 +2,7 @@ package com.liangzc.example.start.demo.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.liangzc.example.redis.BloomFilterCache;
 import com.liangzc.example.start.demo.bean.ConsultConfigArea;
 import com.liangzc.example.start.demo.model.Person;
 import com.liangzc.example.start.demo.model.User;
@@ -66,10 +67,27 @@ public class WebController {
         log.info("============返回mysql查询信息{}",JSON.toJSONString(consultConfigAreas));
         if(!consultConfigAreas.isEmpty()){
             consultConfigAreas.parallelStream().forEach( conf ->{
-                redisTemplate.opsForValue().set(conf.getAreaCode(),conf.getAreaName());
+                redisTemplate.opsForValue().set(conf.getAreaCode()+ BloomFilterCache.KEY_FLAG,JSON.toJSONString(conf));
+//                redisTemplate.opsForHash().put(conf.getAreaCode()+":hash",conf.getAreaCode(),conf );
             });
         }
         return "SUCCESS";
+    }
+
+
+    /**
+     * 通过布隆过滤器来校验是否存在，存在则从redis获取
+     * @param code
+     * @return
+     */
+    @GetMapping("/getMsgByRedis/{code}")
+    @ResponseBody
+    public String getMsgByRedis(@PathVariable("code") String code){
+        String key = code + BloomFilterCache.KEY_FLAG;
+        if (BloomFilterCache.bloomFilter.mightContain(key)){
+            return redisTemplate.opsForValue().get(key).toString();
+        }
+        return "数据未存在缓存中";
     }
 
 }

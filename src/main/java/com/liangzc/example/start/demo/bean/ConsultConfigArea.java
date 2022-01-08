@@ -1,7 +1,9 @@
 package com.liangzc.example.start.demo.bean;
 
+import java.io.Serializable;
+
 //@Alias("ConsultConfigArea")
-public class ConsultConfigArea {
+public class ConsultConfigArea implements Serializable {
 
     public String areaCode;
 
