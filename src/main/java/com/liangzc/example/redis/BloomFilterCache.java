@@ -8,4 +8,6 @@ public class BloomFilterCache {
 
     public static String KEY_FLAG = ":config";
 
+    public static String KEY_LOCK_FLAG = ":lock";
+
 }
