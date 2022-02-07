@@ -104,9 +104,9 @@ public class WebController {
      * @param code
      * @return
      */
-    @GetMapping("/redissonTest/{code}")
+    @GetMapping("/resdissonTryLockTest/{code}")
     @ResponseBody
-    public String resdissonTest(@PathVariable("code") String code){
+    public String resdissonTryLockTest(@PathVariable("code") String code){
         List<ConsultConfigArea> consultConfigAreas = commonService.queryConfigArea();
         log.info("============返回mysql查询信息{}",JSON.toJSONString(consultConfigAreas));
 
@@ -134,6 +134,39 @@ public class WebController {
             }
 
         }
+        return "SUCCESS";
+    }
+
+    /**
+     * 搭配redisson实现分布式锁来操作redis数据
+     * @param code
+     * @return
+     */
+    @GetMapping("/resdissonLockTest/{code}")
+    @ResponseBody
+    public String resdissonLockTest(@PathVariable("code") String code){
+        List<ConsultConfigArea> consultConfigAreas = commonService.queryConfigArea();
+        log.info("============返回mysql查询信息{}",JSON.toJSONString(consultConfigAreas));
+
+        RLock lock = redissonClient.getLock("testLock");
+        //获取锁，会阻塞进程
+        lock.lock();
+        log.info("========================获取锁成功================");
+        try {
+            Thread.sleep(20000);
+            if(!consultConfigAreas.isEmpty()){
+                consultConfigAreas.parallelStream().forEach( conf ->{
+                    redisTemplate.opsForValue().set(conf.getAreaCode()+ BloomFilterCache.KEY_LOCK_FLAG,JSON.toJSONString(conf));
+//
+                });
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            log.info("========================释放锁================");
+            lock.unlock();
+        }
+
         return "SUCCESS";
     }
 
