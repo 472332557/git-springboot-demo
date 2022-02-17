@@ -16,9 +16,9 @@ import java.util.Set;
 
 public class NioSelectorExample implements Runnable{
 
-    private static Selector selector;
+    Selector selector;
 
-    private ServerSocketChannel serverSocketChannel;
+    ServerSocketChannel serverSocketChannel;
 
     public NioSelectorExample(int port) throws IOException {
         selector = Selector.open();
@@ -32,17 +32,18 @@ public class NioSelectorExample implements Runnable{
     //启动一个线程去监听多路复用器注册的客户端channel（客户端的连接或者IO请求）
     @Override
     public void run() {
-        while (true){
-//            System.out.println("111111111111111111111111111111");
-            Set<SelectionKey> selectionKeys = selector.selectedKeys();
-            Iterator<SelectionKey> iterator = selectionKeys.iterator();
-            if(iterator.hasNext()){
-                SelectionKey selectionKey = iterator.next();
-                try {
+        while (!Thread.interrupted()){
+            try {
+                selector.select();//阻塞等待事件就绪
+                Set<SelectionKey> selectionKeys = selector.selectedKeys();//事件列表
+                Iterator<SelectionKey> iterator = selectionKeys.iterator();
+                while (iterator.hasNext()){
+                    SelectionKey selectionKey = iterator.next();
                     disposeRegister(selectionKey);
-                } catch (IOException e) {
-                    e.printStackTrace();
+                    iterator.remove();//移除当前就绪的事件
                 }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
     }
