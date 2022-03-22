@@ -1,10 +1,7 @@
 package com.liangzc.example.redis.nio;
 
-import lombok.SneakyThrows;
-
 import java.io.IOException;
 import java.net.InetSocketAddress;
-import java.net.Socket;
 import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
@@ -55,7 +52,7 @@ public class NioSelectorExample implements Runnable{
             ServerSocketChannel serverSocketChannel = (ServerSocketChannel) selectionKey.channel();
             SocketChannel socketChannel = serverSocketChannel.accept();
             socketChannel.configureBlocking(false);
-            socketChannel.register(selector, SelectionKey.OP_READ);//客户端注册为读事件
+            socketChannel.register(selector, SelectionKey.OP_WRITE);//客户端注册为读事件
         }else if (selectionKey.isReadable()){        //读事件
             System.out.println("---------读事件----------");
             SocketChannel socketChannel = (SocketChannel) selectionKey.channel();
@@ -65,7 +62,7 @@ public class NioSelectorExample implements Runnable{
         }else if (selectionKey.isWritable()){       //写事件
             System.out.println("---------写事件----------");
             SocketChannel socketChannel = (SocketChannel) selectionKey.channel();
-            ByteBuffer byteBuffer = ByteBuffer.wrap("发送信息".getBytes(StandardCharsets.UTF_8));
+            ByteBuffer byteBuffer = ByteBuffer.wrap("send a message".getBytes(StandardCharsets.UTF_8));
             socketChannel.write(byteBuffer);
         }
     }
