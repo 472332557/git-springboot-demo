@@ -1,5 +1,6 @@
 package com.liangzc.example.rabbitmq.produce;
 
+import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessageProperties;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -13,8 +14,8 @@ import java.util.Date;
 @Component
 public class ProduceTest {
 
-//    @Autowired
-//    AmqpTemplate amqpTemplate;
+    @Autowired
+    AmqpTemplate amqpTemplate;
 
     @Autowired
     private RabbitTemplate rabbitTemplate;

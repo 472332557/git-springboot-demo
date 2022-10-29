@@ -1,4 +1,4 @@
 singleServerConfig:
-  address: redis://121.37.249.94:6379
+  address: redis://106.55.227.209:6379
 
 codec: !<org.redisson.codec.JsonJacksonCodec> {}
