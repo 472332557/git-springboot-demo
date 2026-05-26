@@ -26,33 +26,33 @@ public class RabbitConfig {
     private String directExchange;
 
     @Bean("springbootQueue")
-    public Queue getQueue(){
+    public Queue getQueue() {
         return new Queue(queue);
     }
 
     @Bean("springbootExchange")
-    public FanoutExchange getExchange(){
+    public FanoutExchange getExchange() {
         return new FanoutExchange(exchange);
     }
 
     @Bean("springbootDirectQueue")
-    public Queue getDirectQueue(){
+    public Queue getDirectQueue() {
         return new Queue(directQueue);
     }
 
     @Bean("springbootDirectExchange")
-    public DirectExchange getDirectExchange(){
+    public DirectExchange getDirectExchange() {
         return new DirectExchange(directExchange);
     }
 
     //广播交换机和队列绑定
     @Bean
-    public Binding bindQueueAndExchange(@Qualifier("springbootQueue") Queue queue, @Qualifier("springbootExchange") FanoutExchange exchange){
+    public Binding bindQueueAndExchange(@Qualifier("springbootQueue") Queue queue, @Qualifier("springbootExchange") FanoutExchange exchange) {
         return BindingBuilder.bind(queue).to(exchange);
     }
 
     @Bean
-    public Binding binndQueueAndExchangeDirect(@Qualifier("springbootDirectQueue")Queue queue,@Qualifier("springbootDirectExchange") DirectExchange exchange){
+    public Binding binndQueueAndExchangeDirect(@Qualifier("springbootDirectQueue") Queue queue, @Qualifier("springbootDirectExchange") DirectExchange exchange) {
         return BindingBuilder.bind(queue).to(exchange).with("direct");
     }
 

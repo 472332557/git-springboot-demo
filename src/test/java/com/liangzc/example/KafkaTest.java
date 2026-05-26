@@ -16,7 +16,7 @@ public class KafkaTest {
     KafkaProducer kafkaProducer;
 
     @Test
-    public void send(){
+    public void send() {
         kafkaProducer.send("一条发往kafka的消息.........");
     }
 }

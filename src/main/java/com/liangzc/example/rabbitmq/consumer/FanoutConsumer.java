@@ -10,9 +10,9 @@ public class FanoutConsumer {
 
 
     @RabbitHandler
-    public void process(String message){
+    public void process(String message) {
 
-        System.out.println("接收到一条消息--------->>>:"+message);
+        System.out.println("接收到一条消息--------->>>:" + message);
     }
 
 }

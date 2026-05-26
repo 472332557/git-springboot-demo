@@ -26,17 +26,18 @@ public class RabbitDelayConfig {
     /**
      * 延时队列交换机
      * 这里的交换机类型是：CustomExchange
+     *
      * @return
      */
     @Bean("springCustomExchange")
-    public CustomExchange getExchange(){
+    public CustomExchange getExchange() {
         Map<String, Object> args = new HashMap<>();
         args.put("x-delayed-type", "direct");
         return new CustomExchange(exchange, "x-delayed-message", true, false, args);
     }
 
     @Bean("springTopicQueue")
-    public Queue getQueue(){
+    public Queue getQueue() {
         return new Queue(queue);
     }
 
@@ -46,7 +47,7 @@ public class RabbitDelayConfig {
      * @return
      */
     @Bean
-    public Binding bindExchangeAndQueue(@Qualifier("springCustomExchange") CustomExchange exchange, @Qualifier("springTopicQueue") Queue queue){
+    public Binding bindExchangeAndQueue(@Qualifier("springCustomExchange") CustomExchange exchange, @Qualifier("springTopicQueue") Queue queue) {
         return BindingBuilder.bind(queue).to(exchange).with("delay").noargs();
     }
 

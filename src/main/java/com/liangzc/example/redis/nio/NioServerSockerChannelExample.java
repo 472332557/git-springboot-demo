@@ -17,18 +17,17 @@ public class NioServerSockerChannelExample {
     }
 
 
-
     public void test() throws IOException, InterruptedException {
-        while (true){
+        while (true) {
             SocketChannel socketChannel = serverSocketChannel.accept();//获得客户端连接
             //I/O非阻塞
 //            socketChannel.configureBlocking(false);
-            if (socketChannel != null){
+            if (socketChannel != null) {
                 System.out.println("有客户端连接------");
                 ByteBuffer byteBuffer = ByteBuffer.allocate(1024);
                 socketChannel.read(byteBuffer);//此时IO还是阻塞的，必须先连接的客户端，IO操作完成后，才会执行后面连接的IO
-                System.out.println("server receive msg:"+new String(byteBuffer.array()));
-            }else {
+                System.out.println("server receive msg:" + new String(byteBuffer.array()));
+            } else {
                 Thread.sleep(1000);
                 System.out.println("连接未就绪！");
             }

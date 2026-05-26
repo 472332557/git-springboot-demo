@@ -14,7 +14,7 @@ public class RedissonConfig {
 
 
     @Bean
-    public RedissonClient redissonClient(){
+    public RedissonClient redissonClient() {
         Config config = new Config();
         config.useSingleServer().setAddress("redis://121.37.249.94:6379");
         //指定序列化方式：JsonJacksonCodec

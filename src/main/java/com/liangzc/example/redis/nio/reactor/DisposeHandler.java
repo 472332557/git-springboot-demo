@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
 
-public class DisposeHandler implements Runnable{
+public class DisposeHandler implements Runnable {
 
     private SocketChannel socketChannel;
 
@@ -18,7 +18,7 @@ public class DisposeHandler implements Runnable{
         try {
             ByteBuffer byteBuffer = ByteBuffer.allocate(1024);
             socketChannel.read(byteBuffer);
-            System.out.println("server receive message:"+new String(byteBuffer.array()));
+            System.out.println("server receive message:" + new String(byteBuffer.array()));
         } catch (IOException e) {
             e.printStackTrace();
         }

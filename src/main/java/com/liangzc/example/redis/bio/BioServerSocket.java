@@ -8,12 +8,12 @@ import java.util.concurrent.Executors;
 
 public class BioServerSocket {
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
         ServerSocket serverSocket = null;
         ExecutorService executorService = Executors.newFixedThreadPool(10);
         try {
             serverSocket = new ServerSocket(8888);
-            while (true){
+            while (true) {
                 //表示阻塞等待一个客户端的连接，返回的socket表示连接的客户端信息
                 Socket socket = serverSocket.accept();
                 executorService.submit(new IOThreand(socket));
@@ -21,8 +21,8 @@ public class BioServerSocket {
 
         } catch (IOException e) {
             e.printStackTrace();
-        }finally {
-            if(serverSocket != null){
+        } finally {
+            if (serverSocket != null) {
                 try {
                     serverSocket.close();
                 } catch (IOException e) {

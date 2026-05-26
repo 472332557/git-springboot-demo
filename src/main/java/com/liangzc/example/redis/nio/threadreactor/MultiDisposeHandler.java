@@ -6,7 +6,7 @@ import java.nio.channels.SocketChannel;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class MultiDisposeHandler implements Runnable{
+public class MultiDisposeHandler implements Runnable {
 
     private SocketChannel socketChannel;
 
@@ -28,7 +28,7 @@ public class MultiDisposeHandler implements Runnable{
     }
 
 
-    class MultiHandler implements Runnable{
+    class MultiHandler implements Runnable {
 
         @Override
         public void run() {
@@ -37,7 +37,7 @@ public class MultiDisposeHandler implements Runnable{
             try {
                 ByteBuffer byteBuffer = ByteBuffer.allocate(1024);
                 socketChannel.read(byteBuffer);
-                System.out.println("server receive message:"+new String(byteBuffer.array()));
+                System.out.println("server receive message:" + new String(byteBuffer.array()));
             } catch (IOException e) {
                 e.printStackTrace();
             }

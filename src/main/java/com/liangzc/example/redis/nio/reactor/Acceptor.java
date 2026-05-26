@@ -7,7 +7,7 @@ import java.nio.channels.Selector;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
 
-public class Acceptor implements Runnable{
+public class Acceptor implements Runnable {
 
     private Selector selector;
     private ServerSocketChannel serverSocketChannel;
@@ -22,6 +22,6 @@ public class Acceptor implements Runnable{
     public void run() {
         SocketChannel socketChannel = serverSocketChannel.accept();
         socketChannel.configureBlocking(false);
-        socketChannel.register(selector, SelectionKey.OP_READ,new DisposeHandler(socketChannel));//客户端注册为读事件
+        socketChannel.register(selector, SelectionKey.OP_READ, new DisposeHandler(socketChannel));//客户端注册为读事件
     }
 }

@@ -1,4 +1,5 @@
 package com.liangzc.example;
+
 import com.liangzc.example.rabbitmq.produce.ProduceTest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,12 +21,12 @@ public class RabbitMQTest {
     }
 
     @Test
-    public void sendDirect(){
+    public void sendDirect() {
         produceTest.sendDirect();
     }
 
     @Test
-    public void sendDelay(){
+    public void sendDelay() {
         produceTest.sendDelayMsg();
     }
 }

@@ -13,7 +13,7 @@ public class CustomerRedisClientSocket {
 
     private OutputStream outputStream;
 
-    public CustomerRedisClientSocket(String ip,Integer port){
+    public CustomerRedisClientSocket(String ip, Integer port) {
         try {
             socket = new Socket(ip, port);
             inputStream = socket.getInputStream();
@@ -24,7 +24,7 @@ public class CustomerRedisClientSocket {
     }
 
 
-    public void send(String cmd){
+    public void send(String cmd) {
         try {
             outputStream.write(cmd.getBytes());
         } catch (IOException e) {
@@ -32,7 +32,7 @@ public class CustomerRedisClientSocket {
         }
     }
 
-    public String read(){
+    public String read() {
         int cout = 0;
         byte[] bytes = new byte[1024];
         try {

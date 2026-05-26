@@ -7,7 +7,7 @@ import org.apache.zookeeper.CreateMode;
 import org.apache.zookeeper.data.Stat;
 
 public class CuratorCRUDExample {
-    private  CuratorFramework curatorFramework;
+    private CuratorFramework curatorFramework;
 
     public CuratorCRUDExample() {
         this.curatorFramework = CuratorFrameworkFactory.builder()
@@ -29,7 +29,7 @@ public class CuratorCRUDExample {
         System.out.println("创建节点成功：" + node);
         Stat stat = new Stat();//存储状态信息的对象
         byte[] bytes = curatorFramework.getData().storingStatIn(stat).forPath("/liangzc");
-        System.out.println("节点value值:"+new String(bytes));
+        System.out.println("节点value值:" + new String(bytes));
         //修改
         stat = curatorFramework.setData().
                 withVersion(stat.getVersion()).
@@ -41,7 +41,7 @@ public class CuratorCRUDExample {
 
         curatorFramework.delete().forPath(node);
         Stat stat1 = curatorFramework.checkExists().forPath(node);
-        if (stat1 == null){
+        if (stat1 == null) {
             System.out.println("节点删除成功");
 
         }

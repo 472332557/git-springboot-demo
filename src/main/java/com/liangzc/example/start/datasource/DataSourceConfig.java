@@ -18,7 +18,7 @@ public class DataSourceConfig {
     private DruidDataSourceProperty druidDataSourceProperty;
 
     @Bean
-    public DataSource dataSource(){
+    public DataSource dataSource() {
         DruidDataSource datasource = new DruidDataSource();
         datasource.setUrl(druidDataSourceProperty.getUrl());
         datasource.setUsername(druidDataSourceProperty.getUsername());

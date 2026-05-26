@@ -30,27 +30,27 @@ public class WebController {
 
     @RequestMapping("/start")
     @ResponseBody
-    public String start(@RequestParam("id") Integer id){
-        return "hello lzc start"+id;
+    public String start(@RequestParam("id") Integer id) {
+        return "hello lzc start" + id;
     }
 
 
     @RequestMapping("/filter")
     @ResponseBody
-    public String filter(@RequestParam("id") Integer id){
-        return "hello lzc"+id;
+    public String filter(@RequestParam("id") Integer id) {
+        return "hello lzc" + id;
     }
 
     @PostMapping("/postTest")
     @ResponseBody
-    public String postDemo(@RequestParam("id") Integer id){
-        return "post"+ id;
+    public String postDemo(@RequestParam("id") Integer id) {
+        return "post" + id;
     }
 
     @PostMapping("/postJsonTest")
     @ResponseBody
-    public String postDemo(@RequestBody User user){
-        return "post"+ user;
+    public String postDemo(@RequestBody User user) {
+        return "post" + user;
     }
 
 
@@ -65,17 +65,18 @@ public class WebController {
 
     /**
      * 将数据添加进redis
+     *
      * @param code
      * @return
      */
     @GetMapping("/redisTest/{code}")
     @ResponseBody
-    public String resdisTest(@PathVariable("code") String code){
+    public String resdisTest(@PathVariable("code") String code) {
         List<ConsultConfigArea> consultConfigAreas = commonService.queryConfigArea();
-        log.info("============返回mysql查询信息{}",JSON.toJSONString(consultConfigAreas));
-        if(!consultConfigAreas.isEmpty()){
-            consultConfigAreas.parallelStream().forEach( conf ->{
-                redisTemplate.opsForValue().set(conf.getAreaCode()+ BloomFilterCache.KEY_FLAG,JSON.toJSONString(conf));
+        log.info("============返回mysql查询信息{}", JSON.toJSONString(consultConfigAreas));
+        if (!consultConfigAreas.isEmpty()) {
+            consultConfigAreas.parallelStream().forEach(conf -> {
+                redisTemplate.opsForValue().set(conf.getAreaCode() + BloomFilterCache.KEY_FLAG, JSON.toJSONString(conf));
 //                redisTemplate.opsForHash().put(conf.getAreaCode()+":hash",conf.getAreaCode(),conf );
             });
         }
@@ -85,14 +86,15 @@ public class WebController {
 
     /**
      * 通过布隆过滤器来校验是否存在，存在则从redis获取
+     *
      * @param code
      * @return
      */
     @GetMapping("/getMsgByRedis/{code}")
     @ResponseBody
-    public String getMsgByRedis(@PathVariable("code") String code){
+    public String getMsgByRedis(@PathVariable("code") String code) {
         String key = code + BloomFilterCache.KEY_FLAG;
-        if (BloomFilterCache.bloomFilter.mightContain(key)){
+        if (BloomFilterCache.bloomFilter.mightContain(key)) {
             return redisTemplate.opsForValue().get(key).toString();
         }
         return "数据未存在缓存中";
@@ -101,14 +103,15 @@ public class WebController {
 
     /**
      * 搭配redisson实现分布式锁来操作redis数据
+     *
      * @param code
      * @return
      */
     @GetMapping("/resdissonTryLockTest/{code}")
     @ResponseBody
-    public String resdissonTryLockTest(@PathVariable("code") String code){
+    public String resdissonTryLockTest(@PathVariable("code") String code) {
         List<ConsultConfigArea> consultConfigAreas = commonService.queryConfigArea();
-        log.info("============返回mysql查询信息{}",JSON.toJSONString(consultConfigAreas));
+        log.info("============返回mysql查询信息{}", JSON.toJSONString(consultConfigAreas));
 
         RLock lock = redissonClient.getLock("testLock");
         /**
@@ -116,19 +119,19 @@ public class WebController {
          *
          */
         boolean tryLock = lock.tryLock();
-        if(tryLock){
+        if (tryLock) {
             log.info("========================获取锁成功================");
             try {
                 Thread.sleep(20000);
-                if(!consultConfigAreas.isEmpty()){
-                    consultConfigAreas.parallelStream().forEach( conf ->{
-                        redisTemplate.opsForValue().set(conf.getAreaCode()+ BloomFilterCache.KEY_LOCK_FLAG,JSON.toJSONString(conf));
+                if (!consultConfigAreas.isEmpty()) {
+                    consultConfigAreas.parallelStream().forEach(conf -> {
+                        redisTemplate.opsForValue().set(conf.getAreaCode() + BloomFilterCache.KEY_LOCK_FLAG, JSON.toJSONString(conf));
 //
                     });
                 }
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
-            }finally {
+            } finally {
                 log.info("========================释放锁================");
                 lock.unlock();
             }
@@ -139,14 +142,15 @@ public class WebController {
 
     /**
      * 搭配redisson实现分布式锁来操作redis数据
+     *
      * @param code
      * @return
      */
     @GetMapping("/resdissonLockTest/{code}")
     @ResponseBody
-    public String resdissonLockTest(@PathVariable("code") String code){
+    public String resdissonLockTest(@PathVariable("code") String code) {
         List<ConsultConfigArea> consultConfigAreas = commonService.queryConfigArea();
-        log.info("============返回mysql查询信息{}",JSON.toJSONString(consultConfigAreas));
+        log.info("============返回mysql查询信息{}", JSON.toJSONString(consultConfigAreas));
 
         RLock lock = redissonClient.getLock("testLock");
         //获取锁，会阻塞进程
@@ -154,15 +158,15 @@ public class WebController {
         log.info("========================获取锁成功================");
         try {
             Thread.sleep(20000);
-            if(!consultConfigAreas.isEmpty()){
-                consultConfigAreas.parallelStream().forEach( conf ->{
-                    redisTemplate.opsForValue().set(conf.getAreaCode()+ BloomFilterCache.KEY_LOCK_FLAG,JSON.toJSONString(conf));
+            if (!consultConfigAreas.isEmpty()) {
+                consultConfigAreas.parallelStream().forEach(conf -> {
+                    redisTemplate.opsForValue().set(conf.getAreaCode() + BloomFilterCache.KEY_LOCK_FLAG, JSON.toJSONString(conf));
 //
                 });
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             log.info("========================释放锁================");
             lock.unlock();
         }

@@ -9,7 +9,7 @@ public class CommonConstant {
 
     public final static String LINE = "\r\n";
 
-    public enum Commond{
+    public enum Commond {
         SET,
         GET
     }

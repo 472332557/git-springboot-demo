@@ -9,8 +9,8 @@ public class StackOverFlowTest {
         method();
     }
 
-    public static void method(){
-        System.out.println(count ++);
+    public static void method() {
+        System.out.println(count++);
         method();
     }
 }

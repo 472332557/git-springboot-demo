@@ -11,9 +11,9 @@ public class DirectConsumer {
 
 
     @RabbitHandler
-    public void process(Message message){
+    public void process(Message message) {
 
-        System.out.println("接收到一条消息--------->>>:"+message);
+        System.out.println("接收到一条消息--------->>>:" + message);
     }
 
 }

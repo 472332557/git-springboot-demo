@@ -27,26 +27,25 @@ public class FileTest {
         String pfx = ".pfx";
         String machId = "szfsC00000000X77";
         String path = "/hqcverify/" + machId;
-        String pfxPath = path + "/"+machId +pfx;
+        String pfxPath = path + "/" + machId + pfx;
 
 
         System.out.println(pfxPath);
 
 
-
         ClassPathResource classPathResource = new ClassPathResource(pfxPath);
         File pfxPathFile = classPathResource.getFile();
-        System.out.println("resourceFile:"+pfxPathFile.getPath());
+        System.out.println("resourceFile:" + pfxPathFile.getPath());
 
         String classpathStr = pfxPathFile.getPath();
 
-        System.out.println("classpath路径："+classpathStr);
+        System.out.println("classpath路径：" + classpathStr);
 
-        System.out.println("是否是文件："+pfxPathFile.isFile());
+        System.out.println("是否是文件：" + pfxPathFile.isFile());
 
-        if (pfxPathFile.exists()){
+        if (pfxPathFile.exists()) {
             System.out.println("exists");
-        }else {
+        } else {
             System.out.println("not exists");
         }
 //        if(!pfxPathFile.exists()){
@@ -61,21 +60,21 @@ public class FileTest {
         String pfx = ".pfx";
         String machId = "szfsC00000000X77";
         String path = "/hqcverify/" + machId;
-        String pfxPath = path + "/"+machId +pfx;
+        String pfxPath = path + "/" + machId + pfx;
         System.out.println(pfxPath);
 
 //        String classpathStr = ResourceUtils.getFile("classpath:").toString();
         String classpathStr = ResourceUtils.getFile("classpath:").toString();
 
-        System.out.println("classpath路径："+classpathStr);
+        System.out.println("classpath路径：" + classpathStr);
 
-        File pfxPathFile = new File(classpathStr +pfxPath);
+        File pfxPathFile = new File(classpathStr + pfxPath);
 
-        System.out.println("是否是文件："+pfxPathFile.isFile());
+        System.out.println("是否是文件：" + pfxPathFile.isFile());
 
-        if (pfxPathFile.exists()){
+        if (pfxPathFile.exists()) {
             System.out.println("exists");
-        }else {
+        } else {
             System.out.println("not exists");
         }
 //        if(!pfxPathFile.exists()){
@@ -91,7 +90,7 @@ public class FileTest {
 //        String crt = ".crt";
         String machId = "szfsC00000000X77";
         String path = "/hqcverify/" + machId;
-        String pfxPath = path + "/"+machId +pfx;
+        String pfxPath = path + "/" + machId + pfx;
 //        String crtPath = path + "/"+machId +crt;
 
         System.out.println(pfxPath);
@@ -99,16 +98,16 @@ public class FileTest {
 
         String classpathStr = ResourceUtils.getURL("classpath:").toString();
         String newClasspathStr = classpathStr.substring(6, classpathStr.length() - 1);
-        System.out.println("classpath路径："+classpathStr);
-        System.out.println("newClasspath路径："+newClasspathStr);
+        System.out.println("classpath路径：" + classpathStr);
+        System.out.println("newClasspath路径：" + newClasspathStr);
 
-        File pfxPathFile = new File(newClasspathStr +pfxPath);
+        File pfxPathFile = new File(newClasspathStr + pfxPath);
 
-        System.out.println("是否是文件："+pfxPathFile.isFile());
+        System.out.println("是否是文件：" + pfxPathFile.isFile());
 
-        if (pfxPathFile.exists()){
+        if (pfxPathFile.exists()) {
             System.out.println("exists");
-        }else {
+        } else {
             System.out.println("not exists");
         }
 //        if(!pfxPathFile.exists()){
@@ -117,7 +116,6 @@ public class FileTest {
         System.out.println(pfxPathFile.getName());
         System.out.println(pfxPathFile.getPath());
     }
-
 
 
 }

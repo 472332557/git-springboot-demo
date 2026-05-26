@@ -17,8 +17,8 @@ import java.util.concurrent.ExecutionException;
  * 使用lua执行redis命令实现访问限流
  * 注意：要想测试这个类，请使用classpath下的lua_config配置文件进行测试，否则失败，可能是必须按照yaml方式指定配置文件
  * 并且RedissonConfig类要注释，原因可能为：这样会覆盖配置文件redisson.yml里面的序列化方式，因为配置类中并没有指定序列化方式
- *
- *  忽略以上说明：在java配置类RedissonConfig中也可以指定序列化方式。之间报错的原因就是因为，没有指定序列化方式。
+ * <p>
+ * 忽略以上说明：在java配置类RedissonConfig中也可以指定序列化方式。之间报错的原因就是因为，没有指定序列化方式。
  */
 
 @RestController
@@ -39,7 +39,7 @@ public class LuaController {
 
     @RequestMapping("/lua/{id}")
     public String luaTest(@PathVariable("id") Integer id) throws ExecutionException, InterruptedException {
-        List<Object> keyList = Arrays.asList("Limit:"+id);
+        List<Object> keyList = Arrays.asList("Limit:" + id);
         RScript rScript = redissonClient.getScript();
         /**
          *         10 ： 表示参数1 ——> ARGV[1] 时间10秒

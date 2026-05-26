@@ -30,8 +30,8 @@ public class ExportController {
     public String export(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
         File file = new File("D:/receive-file/DOWNLOAD_PATH/应收账款汇总报表_2021051014125369869.xls");
         OutputStream outputStream = null;
-        InputStream inputStream= null;
-        String name = URLEncoder.encode(file.getName(),"UTF-8");
+        InputStream inputStream = null;
+        String name = URLEncoder.encode(file.getName(), "UTF-8");
         response.setContentType("application/vnd.ms-excel;charset=UTF-8");
         response.setHeader("Content-disposition", "attachment; filename=" + name);
         response.setHeader("Content-disposition", "attachment; filename=" + new String(name.getBytes("iso8859-1"), "UTF-8"));
@@ -40,12 +40,12 @@ public class ExportController {
             inputStream = new FileInputStream(file);
             outputStream = response.getOutputStream();
             int i;
-            while ((i=inputStream.read()) != -1){
+            while ((i = inputStream.read()) != -1) {
                 outputStream.write(i);
             }
         } catch (IOException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             try {
                 inputStream.close();
                 outputStream.close();
@@ -60,12 +60,12 @@ public class ExportController {
     @ResponseBody
     public String export1(HttpServletRequest request, HttpServletResponse response) throws IOException {
         OutputStream outputStream = null;
-        InputStream inputStream= null;
+        InputStream inputStream = null;
         String name = "测试导出excel2020715";
         name = URLEncoder.encode(name, "UTF-8");
         response.setContentType("application/vnd.ms-excel;charset=UTF-8");
-        response.setHeader("Content-disposition", "attachment; filename=" + name+".xlsx");
-        List<String> lists = Arrays.asList("1","2","3","4","5","6","7","8","9","10");
+        response.setHeader("Content-disposition", "attachment; filename=" + name + ".xlsx");
+        List<String> lists = Arrays.asList("1", "2", "3", "4", "5", "6", "7", "8", "9", "10");
         XSSFWorkbook workbook = new XSSFWorkbook();
         XSSFSheet sheet = workbook.createSheet("测试导出shht页");
         XSSFRow row = sheet.createRow(0);
@@ -74,9 +74,9 @@ public class ExportController {
             cell.setCellValue(lists.get(i));
         }
 
-        List<String> names = Arrays.asList("aa","bb","cc","dd","ee","ff","gg","hh","ii","jj");
-        sheet.addMergedRegion(new CellRangeAddress(lists.size()+1,lists.size()+1,0,5));
-        row = sheet.createRow(lists.size()+1);
+        List<String> names = Arrays.asList("aa", "bb", "cc", "dd", "ee", "ff", "gg", "hh", "ii", "jj");
+        sheet.addMergedRegion(new CellRangeAddress(lists.size() + 1, lists.size() + 1, 0, 5));
+        row = sheet.createRow(lists.size() + 1);
 
         Cell cell = row.createCell(0);
         cell.setCellValue("合并了");
@@ -107,12 +107,12 @@ public class ExportController {
         String name = "测试导出excel2020715";
         name = URLEncoder.encode(name, "UTF-8");
         response.setContentType("application/vnd.ms-excel;charset=UTF-8");
-        response.setHeader("Content-disposition", "attachment; filename=" + name+".xlsx");
-        List<String> lists = Arrays.asList("1","2","3","4","5","6","7","8","9","10");
+        response.setHeader("Content-disposition", "attachment; filename=" + name + ".xlsx");
+        List<String> lists = Arrays.asList("1", "2", "3", "4", "5", "6", "7", "8", "9", "10");
         XSSFWorkbook workbook = new XSSFWorkbook();
         XSSFSheet sheet = workbook.createSheet("测试导出shht页");
 
-        int count = (int)Math.ceil((double) lists.size() /  (double) initNum);
+        int count = (int) Math.ceil((double) lists.size() / (double) initNum);
         ExecutorService executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
         executorService.execute(new Runnable() {
             @Override

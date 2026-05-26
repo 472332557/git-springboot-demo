@@ -13,11 +13,11 @@ public class MetaSpaceOOMTest {
     List<Class<?>> list = new ArrayList<>();
 
     @GetMapping("/noheap")
-    public void nonheap(){
+    public void nonheap() {
         System.out.println("----------------------------------------------");
-     while(true){
-         list.addAll(MyMetaspace.createClasses());
-         }
+        while (true) {
+            list.addAll(MyMetaspace.createClasses());
+        }
     }
 
 }

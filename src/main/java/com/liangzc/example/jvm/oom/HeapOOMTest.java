@@ -16,9 +16,9 @@ public class HeapOOMTest {
     List<User> list = new ArrayList<>();
 
     @GetMapping("/heap")
-    public void start(){
+    public void start() {
 
-        while (true){
+        while (true) {
             list.add(new User());
         }
     }

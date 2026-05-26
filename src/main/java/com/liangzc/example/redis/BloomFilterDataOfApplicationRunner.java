@@ -22,15 +22,15 @@ public class BloomFilterDataOfApplicationRunner implements ApplicationRunner {
 
     @Autowired
     private CommonService commonService;
-    
+
     @Override
     public void run(ApplicationArguments args) throws Exception {
         log.info("初始化数据加载到布隆过滤器中=========>start");
         List<ConsultConfigArea> consultConfigAreas = commonService.queryConfigArea();
         BloomFilter<String> bloomFilter = BloomFilter.create(Funnels.stringFunnel(Charsets.UTF_8), 10000, 0.02);
-        consultConfigAreas.parallelStream().forEach(conf ->{
+        consultConfigAreas.parallelStream().forEach(conf -> {
             //将数据加载进布隆过滤器中
-            bloomFilter.put(conf.getAreaCode()+BloomFilterCache.KEY_FLAG);
+            bloomFilter.put(conf.getAreaCode() + BloomFilterCache.KEY_FLAG);
         });
         //初始化布隆过滤器
         BloomFilterCache.bloomFilter = bloomFilter;

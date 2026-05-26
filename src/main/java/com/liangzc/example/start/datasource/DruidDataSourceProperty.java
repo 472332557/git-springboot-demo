@@ -47,7 +47,7 @@ public class DruidDataSourceProperty {
     // PSCache Mysql下建议关闭
     private boolean poolPreparedStatements = false;
 
-    private int maxPoolPreparedStatementPerConnectionSize = - 1;
+    private int maxPoolPreparedStatementPerConnectionSize = -1;
 
     // 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
     private String filters;

@@ -24,11 +24,10 @@ public class LRUCacheHeadInsertDemo {
     }
 
 
-
     //获取key
-    public String getKey(String key){
+    public String getKey(String key) {
         NodeDemo nodeDemo = nodeDemoMap.get(key);
-        if (nodeDemo == null){
+        if (nodeDemo == null) {
             return null;
         }
         //获取数据后，需要将该node节点进行移动到头部节点
@@ -37,16 +36,16 @@ public class LRUCacheHeadInsertDemo {
     }
 
 
-    public void put(String key,String value){
+    public void put(String key, String value) {
         NodeDemo nodeDemo = nodeDemoMap.get(key);
         //该node不存在，需要添加进链表
-        if (nodeDemo == null){
-            if (nodeDemoMap.size() > capacity){//需要将尾部Node移除
+        if (nodeDemo == null) {
+            if (nodeDemoMap.size() > capacity) {//需要将尾部Node移除
                 deleteNode(tail);
                 nodeDemoMap.remove(tail.key);
             }
             //将Node节点添加到头部
-            nodeDemo = new NodeDemo(key,value);
+            nodeDemo = new NodeDemo(key, value);
             addNodeToHead(nodeDemo);
             nodeDemoMap.put(key, nodeDemo);
         }
@@ -73,20 +72,20 @@ public class LRUCacheHeadInsertDemo {
     }
 
     private void deleteNode(NodeDemo nodeDemo) {
-        if (nodeDemo == tail){
+        if (nodeDemo == tail) {
             tail = tail.prev;
             tail.next = null;
-        }else if (nodeDemo == head){
+        } else if (nodeDemo == head) {
             head = head.next;
             head.prev = null;
-        }else {
+        } else {
             nodeDemo.prev.next = nodeDemo.next;
             nodeDemo.next.prev = nodeDemo.prev;
         }
     }
 
 
-    class NodeDemo{
+    class NodeDemo {
         private String key;
         private String value;
         NodeDemo prev;
